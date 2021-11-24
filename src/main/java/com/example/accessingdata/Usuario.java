@@ -1,6 +1,5 @@
 package com.example.accessingdata;
-
-
+//wendel
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,5 +33,5 @@ public class Usuario {
         this.email = email;
     }
 
-
+    
 }

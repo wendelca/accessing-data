@@ -1,8 +1,9 @@
 package com.example.accessingdata;
-
-
+//wendel
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller // Isso significa que esta classe é um controlador
-@RequestMapping(path = "/demo") // Isso significa que os URLs começam com / demo (após o caminho do aplicativo)
+@Controller // Significa que esta classe é um controlador
+@RequestMapping(path = "/demo") // Isso significa que os URLs começam com / demo (após o caminho do app)
+@CrossOrigin(origins = "*")
 public class PrincipalController {
 
-    @Autowired // faz o star do nosso objeto
+    @Autowired // Inicia o nosso objeto
     private UsuarioRepository uRepository;
 
     @PostMapping(path = "/add")
@@ -29,12 +31,15 @@ public class PrincipalController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<Usuario> getAllUsuarios(){
-        return uRepository.findAll();
+    public @ResponseBody Iterable<Usuario> getAllUsuarios() {
+        return uRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        // return uRepository.findAll();
     }
-    //PUT atualizar
+
+    // PUT atualizar
     @PutMapping(path = "/update/{id}")
-    public @ResponseBody String updateUsuario(@PathVariable int id, @RequestParam String nome, @RequestParam String email){
+    public @ResponseBody String updateUsuario(@PathVariable int id, @RequestParam String nome,
+            @RequestParam String email) {
         Usuario u = uRepository.findById(id);
         u.setNome(nome);
         u.setEmail(email);
@@ -44,11 +49,8 @@ public class PrincipalController {
 
     // DELETE apagar
     @DeleteMapping(path = "/delete/{id}")
-    public @ResponseBody String deleteUsuario(@PathVariable int id){
+    public @ResponseBody String deleteUsuario(@PathVariable int id) {
         uRepository.deleteById(id);
         return "Ok ao apagar.";
-
-        }
-    
-    
+    }
 }
