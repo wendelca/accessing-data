@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-@Controller // Significa que esta classe é um controlador
-@RequestMapping(path = "/demo") // Isso significa que os URLs começam com / demo (após o caminho do app)
+@Controller // Isso significa que esta classe é um Controlador
+@RequestMapping(path = "/demo") // Isso significa que os URLs começam com / Demo (após o caminho do aplicativo)
 @CrossOrigin(origins = "*")
 public class PrincipalController {
-
-    @Autowired // Inicia o nosso objeto
+    @Autowired // faz o star do nosso objeto
     private UsuarioRepository uRepository;
 
     @PostMapping(path = "/add")
@@ -28,6 +26,21 @@ public class PrincipalController {
         u.setEmail(email);
         uRepository.save(u);
         return "Ok ao gravar.";
+
+        if(uRepository.findByEmail(email) != null ){
+            return "O email digitado já existe.";
+        }
+
+        try {
+           Usuario u = new Usuario();
+           u.setNome(nome);
+            u.setEmail(email);
+            uRepository.save(u);
+            return "Ok ao gravar.";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
     }
 
     @GetMapping(path = "/all")
@@ -35,7 +48,6 @@ public class PrincipalController {
         return uRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         // return uRepository.findAll();
     }
-
     // PUT atualizar
     @PutMapping(path = "/update/{id}")
     public @ResponseBody String updateUsuario(@PathVariable int id, @RequestParam String nome,
@@ -46,7 +58,6 @@ public class PrincipalController {
         uRepository.save(u);
         return "Ok ao atualizar.";
     }
-
     // DELETE apagar
     @DeleteMapping(path = "/delete/{id}")
     public @ResponseBody String deleteUsuario(@PathVariable int id) {
