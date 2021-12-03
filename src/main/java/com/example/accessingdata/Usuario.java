@@ -24,12 +24,20 @@ public class Usuario {
         return nome;
     }
     public void setNome(String nome) {
+            if(nome.equals("")){
+                throw new IllegalArgumentException("Erro no preenchimento do nome.");
+            }
         this.nome = nome;
     }
     public String getEmail() {
         return email;
+
     }
     public void setEmail(String email) {
+        if(email.equals("")){
+            throw new IllegalArgumentException("Erro no preenchimento do email.");
+        }
+        
         this.email = email;
     }
 
