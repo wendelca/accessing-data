@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 @Controller // Isso significa que esta classe é um Controlador
 @RequestMapping(path = "/demo") // Isso significa que os URLs começam com / Demo (após o caminho do aplicativo)
 @CrossOrigin(origins = "*")
 public class PrincipalController {
-    @Autowired // faz o star do nosso objeto
+    @Autowired // faz o starte do nosso objeto
     private UsuarioRepository uRepository;
 
     @PostMapping(path = "/add")
